@@ -6,6 +6,7 @@ var app = express();
 var restler = require('restler');
 var redis = require('redis')
     , client = redis.createClient();
+var URL= require(__dirname + '/utils/URL');
 var timer = 5000;
 var port = 3000;
 
@@ -35,6 +36,7 @@ app.get('/about.html', function(req, res) {
   res.render('about.html');
 });
 
+
 // Redis server
   
 client.on('error', function(err) {
@@ -43,20 +45,24 @@ client.on('error', function(err) {
 
 client.hset('hashkey1', 'field1', 'value1', redis.print);
 client.hset('hashkey1', 'field2', 'value2', redis.print);
-client.hkeys('hashkey1', function(err, replies) {
+client.hgetall('hashkey1', function(err, replies) {
 /*   console.log(replies.length + 'replies:'); */
   console.log(replies);
 });
 
 // Periodic refresh videos from vimeo
 
+var index_vimeo = require(__dirname + '/modules/index_vimeo');
+index_vimeo();
+
 /*setInterval(function() {
-  restler.get('http://vimeo.com/api/v2/album/2119220/videos.json')
+  restler.get(URL.INDEX_VIMEO)
     .on('complete', function(data) {
       console.log(data);
     });
 
 }, timer);*/
+
 app.listen(port);
 console.log('running~', app.get('address'));
 
