@@ -7,6 +7,8 @@ var redis = require('redis')
 module.exports = util_redis = {};
 
 util_redis.writeVideos(videos, callback) {
+  client.on('error', function(err) {
+    console.log('Error: ' + err);
+  });  
   
-
 }

@@ -1,4 +1,4 @@
-// util_index.js
+// util_vimeo.js
 //
 // Module dependencies
 var restler = require('restler');
@@ -6,12 +6,12 @@ var URL = require('../utils/URL.js');
 var helpers = require('../helpers/helpers.js');
 var async = require('async');
 
-var util_index = module.exports = {};
+var util_vimeo = module.exports = {};
 
 // retrieve vimeo urls from video information
 
-util_index.getVideoInfo = function(callback) {
-  restler.get(URL.VIMEO.ALBUM)
+util_vimeo.getVideoInfo = function(albumUrl, callback) {
+  restler.get(albumUrl)
     .on('success', function(rawVideos) {
       callback(null, rawVideos, helpers.getVideoUrl(rawVideos));
     }).on('error', function(err) {
@@ -21,7 +21,7 @@ util_index.getVideoInfo = function(callback) {
 
 // retrieve vimeo embed codes from video information
 
-util_index.getVideoEmbed = function(rawVideos, videoUrls, callback) {
+util_vimeo.getVideoEmbed = function(rawVideos, videoUrls, callback) {
   async.mapSeries(videoUrls, function (videoUrl, callback) {
         restler.get(URL.VIMEO.EMBED + encodeURIComponent(videoUrl))
           .once('success', function(embedUrl) {
@@ -41,7 +41,7 @@ util_index.getVideoEmbed = function(rawVideos, videoUrls, callback) {
 
 // merge embed codes into video information
 
-util_index.mergeVideoInfo = function(rawVideos, embedUrls, callback) {
+util_vimeo.mergeVideoInfo = function(rawVideos, embedUrls, callback) {
   for (i = 0; i < embedUrls.length; i++) {
     rawVideos[i].html = embedUrls[i]
   }

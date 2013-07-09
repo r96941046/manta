@@ -52,8 +52,8 @@ client.hgetall('hashkey1', function(err, replies) {
 
 // Periodic refresh videos from vimeo
 
-var index_vimeo = require(__dirname + '/modules/index_vimeo');
-index_vimeo();
+var register = require(__dirname + '/modules/register');
+register();
 
 /*setInterval(function() {
   restler.get(URL.INDEX_VIMEO)
