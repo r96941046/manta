@@ -52,7 +52,7 @@ client.hgetall('hashkey1', function(err, replies) {
 
 // Periodic refresh videos from vimeo
 
-var register = require(__dirname + '/modules/register');
+var register = require(__dirname + '/modules/register.js');
 register();
 
 /*setInterval(function() {
