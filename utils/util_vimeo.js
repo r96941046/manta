@@ -10,11 +10,22 @@ var util_vimeo = module.exports = {};
 
 // retrieve vimeo urls from video information
 
-util_vimeo.getVideoInfo = function(albumUrl, callback) {
+util_vimeo.getVideoInfo = function (albumUrl, callback) {
   restler.get(albumUrl)
     .on('success', function(rawVideos) {
       callback(null, rawVideos, helpers.getVideoUrl(rawVideos));
     }).on('error', function(err) {
+      callback(err);
+    });
+}
+
+// retrieve album list keys from video albums
+
+util_vimeo.getAlbumList = function (albumUrl, callback) {
+  restler.get(albumUrl)
+    .once('success', function(rawVideos) {
+      callback(null, helpers.getListKeys(rawVideos));
+    }).once('error', function(err) {
       callback(err);
     });
 }
@@ -33,7 +44,7 @@ util_vimeo.getVideoEmbed = function(rawVideos, videoUrls, callback) {
         } else {
           // prevent leaking of []
           if (embedUrls.length != 0) {
-          callback(null, rawVideos, embedUrls);
+            callback(null, rawVideos, embedUrls);
           }
         }
       });

@@ -30,6 +30,24 @@ lib_register.getAllVideos = function(callback) {
       callback(null, allVideos);
     }
   });
-};
+}
 
-
+lib_register.getAlbumLists = function(callback) {
+  async.parallel({
+    all : function (callback) {
+      util_vimeo.getAlbumList(URL.VIMEO.ALBUM.ALL, callback);
+    },
+    index : function (callback) {
+      util_vimeo.getAlbumList(URL.VIMEO.ALBUM.INDEX, callback); 
+    },
+    library : function (callback) {
+      util_vimeo.getAlbumList(URL.VIMEO.ALBUM.LIBRARY, callback);
+    }
+  }, function (err, lists) {
+      if (err instanceof Error) {
+        console.log('Error: ' + err);
+      } else {
+        callback(null, lists);
+      }
+    });
+}

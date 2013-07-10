@@ -4,7 +4,7 @@
 
 var helpers = module.exports = {};
 
-helpers.getVideoUrl = function(arr){
+helpers.getVideoUrl = function (arr) {
   var videoUrls = [];
   if (!(arr instanceof Array)) {
     return new Error('Video data from vimeo is not an array');
@@ -13,5 +13,17 @@ helpers.getVideoUrl = function(arr){
       videoUrls[i] = arr[i].url
     }
     return videoUrls;
+  }
+}
+
+helpers.getListKeys = function (arr) {
+  var listKeys = [];
+  if (!(arr instanceof Array)) {
+    return new Error('Video data from vimeo is not an array');
+  } else {
+    for (i = 0; i < arr.length; i++) {
+      listKeys[i] = 'video:' + arr[i].id;
+    }
+    return listKeys;
   }
 }
