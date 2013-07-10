@@ -13,7 +13,7 @@ var util_vimeo = module.exports = {};
 util_vimeo.getVideoInfo = function (albumUrl, callback) {
   restler.get(albumUrl)
     .on('success', function(rawVideos) {
-      callback(null, rawVideos, helpers.getVideoUrl(rawVideos));
+      callback(null, helpers.appendVideoEmbed(rawVideos));
     }).on('error', function(err) {
       callback(err);
     });

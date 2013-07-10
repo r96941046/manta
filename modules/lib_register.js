@@ -16,13 +16,7 @@ lib_register.getAllVideos = function(callback) {
   async.waterfall([
     function (callback) {
       util_vimeo.getVideoInfo(URL.VIMEO.ALBUM.ALL, callback);
-    },    
-    function (rawVideos, videoUrls, callback) {
-      util_vimeo.getVideoEmbed(rawVideos, videoUrls, callback);
-    },
-    function (rawVideos, embedUrls, callback) {
-      util_vimeo.mergeVideoInfo(rawVideos, embedUrls, callback);
-    } 
+    }    
   ], function (err, allVideos) {
     if (err instanceof Error) {
       console.log('Error: ' + err);

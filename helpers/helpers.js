@@ -16,6 +16,20 @@ helpers.getVideoUrl = function (arr) {
   }
 }
 
+helpers.appendVideoEmbed = function (arr) {
+  if (!(arr instanceof Array)) {
+     return new Error('Video dara from vimeo is not an array');
+     } else {
+        for (i = 0; i < arr.length; i++) {
+               arr[i].html = '<iframe src=\"http:\/\/player.vimeo.com\/video\/'
+               + arr[i].id
+               + '\" width=\"1920\" height=\"1080\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>';
+        }
+      return arr;
+     }
+}
+
+
 helpers.getListKeys = function (arr) {
   var listKeys = [];
   if (!(arr instanceof Array)) {
