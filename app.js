@@ -43,12 +43,9 @@ client.on('error', function(err) {
   console.log('Error: ' + err);
 });
 
-client.hset('hashkey1', 'field1', 'value1', redis.print);
-client.hset('hashkey1', 'field2', 'value2', redis.print);
-client.hgetall('hashkey1', function(err, replies) {
-/*   console.log(replies.length + 'replies:'); */
-  console.log(replies);
-});
+// Flush db when in development stage
+
+client.flushdb();
 
 // Periodic refresh videos from vimeo
 

@@ -10,8 +10,11 @@ var register = module.exports = function () {
       function(callback) {
         lib_register.getAllVideos(callback);
       },
-      function(results) {
-        console.log(results);
+      function(allVideos, listKeys, callback) {
+      
+      }, 
+      function(results, callback) {
+      
       }
       
       ]);

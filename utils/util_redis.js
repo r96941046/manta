@@ -6,9 +6,11 @@ var redis = require('redis')
 
 module.exports = util_redis = {};
 
-util_redis.writeVideos(videos, callback) {
+util_redis.compareSets(allVideos, listKeys, callback) {
   client.on('error', function(err) {
     console.log('Error: ' + err);
   });  
+  
+  console.log(client.exists('video:all'));
   
 }

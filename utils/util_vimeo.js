@@ -8,12 +8,12 @@ var async = require('async');
 
 var util_vimeo = module.exports = {};
 
-// retrieve vimeo urls from video information
+// Request for all video infos, append embed code to it, and retrieve a list for it.
 
 util_vimeo.getVideoInfo = function (albumUrl, callback) {
   restler.get(albumUrl)
     .on('success', function(rawVideos) {
-      callback(null, helpers.appendVideoEmbed(rawVideos));
+      callback(null, helpers.appendVideoEmbed(rawVideos), helpers.getListKeys(rawVideos));
     }).on('error', function(err) {
       callback(err);
     });
