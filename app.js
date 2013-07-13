@@ -7,7 +7,7 @@ var restler = require('restler');
 var redis = require('redis')
     , client = redis.createClient();
 var URL= require(__dirname + '/utils/URL');
-var timer = 5000;
+var timer = 10000;
 var port = 3000;
 
 // Configuration
