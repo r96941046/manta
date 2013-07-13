@@ -1,47 +1,39 @@
 // register.js
 //
-// Module Dependencies
-var lib_register = require('../modules/lib_register.js');
-var async = require('async');
+// A function module
+// Send request to vimeo, acquire information about videos in an album
 
-var register = module.exports = function () {
-  
+// Module dependencies
+
+var restler = require('restler')
+    , async = require('async')
+    , URL = require('../utils/URL.js')
+    , util_vimeo = require('../utils/util_vimeo.js')
+    , util_redis = require('../utils/util_redis');
+var redis = require('redis')
+    , client = redis.createClient();
+
+module.exports = register =  function() {
   async.waterfall([
-      function(callback) {
-        lib_register.getAllVideos(callback);
-      },
-      function(allVideos, listKeys, callback) {
-      
-      }, 
-      function(results, callback) {
-      
-      }
-      
-      ]);
+    function (callback) {
+      util_vimeo.getRegisterItems(callback);
+    },
+    function (itemsToRegister, callback) {
+      util_redis.registerAllItems(itemsToRegister, callback);
+    }
 
-/*  async.series({
-    videos : function (callback) {
-              lib_register.getAllVideos(callback);
-             },
-    lists : function (callback) {
-             lib_register.getAlbumLists(callback);
-            }
-  }, function (err, results) {
-   if (err instanceof Error) {
-    console.log('Error: ' + err);
-   } else {
-     console.log('-------------------------------------------');
-     console.log(results);*/
-/*      console.log('-------------------------------------------'); */
-/*     console.log(results.lists.all);
-     console.log('-------------------------------------------');
-     console.log(results.lists.index);
-     console.log('-------------------------------------------');
-     console.log(results.lists.library);*/
-/*   }
-  
+  ], function (err, redisLogs) {
+    if (err instanceof Error) {
+      console.log('Error: ' + err);
+    } else {
+      client.smembers('video:all:temp', redis.print);
+      client.smembers('video:all:add', redis.print);
+      client.smembers('video:all:delete', redis.print);
+      client.smembers('video:all', redis.print);
+      client.lrange('video:index', 0, -1, redis.print);
+      client.lrange('video:library', 0,-1, redis.print);
+      client.lrange('video:index:temp', 0, -1, redis.print);
+      client.lrange('video:library:temp', 0, -1, redis.print);
+    }
   });
-
-*/
 };
-
