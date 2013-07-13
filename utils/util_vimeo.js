@@ -14,27 +14,33 @@ util_vimeo.getRegisterItems = function (callback) {
   async.series({
     all: function (callback) {
           restler.get(URL.VIMEO.ALBUM.ALL)
-            .once('success', function(rawVideos) {
+            .once('complete', function(rawVideos) {
+              if (rawVideos instanceof Error) {
+                callback(rawVideos);
+              } else {
               callback(null, { videos: helpers.appendVideoEmbed(rawVideos)
                                , keys: helpers.getListKeys(rawVideos) });
-            }).once('error', function(err) {
-              callback(err);
+              }
             });
          },
     indexKeys: function (callback) {
         restler.get(URL.VIMEO.ALBUM.INDEX)
-          .once('success', function (indexList) {
-            callback(null, helpers.getListKeys(indexList)); 
-          }).once('error', function (err) {
-            callback(err);
+          .once('complete', function (indexList) {
+            if (indexList instanceof Error) {
+              callback(indexList);
+            } else {
+            callback(null, helpers.getListKeys(indexList));
+            }
           });
       },
     libraryKeys: function (callback) {
         restler.get(URL.VIMEO.ALBUM.LIBRARY)
-          .once('success', function (libraryList) {
+          .once('complete', function (libraryList) {
+            if (libraryList instanceof Error) {
+              callback(libraryList);
+            } else {
             callback(null, helpers.getListKeys(libraryList));
-          }).once('error', function (err) {
-            callback(err);
+            }
           });
       }
       }, function (err, results) {

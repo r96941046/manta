@@ -7,7 +7,7 @@ var restler = require('restler');
 var redis = require('redis')
     , client = redis.createClient();
 var URL= require(__dirname + '/utils/URL');
-var timer = 10000;
+var timer = 5000;
 var port = 3000;
 
 // Configuration
@@ -50,7 +50,7 @@ client.flushdb();
 // Periodic refresh videos from vimeo
 
 var register = require(__dirname + '/modules/register.js');
-setInterval( register() , timer );
+setInterval( register , timer );
 
 /*setInterval(function() {
   restler.get(URL.INDEX_VIMEO)
