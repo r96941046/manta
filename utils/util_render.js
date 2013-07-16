@@ -6,11 +6,13 @@ var redis = require('redis')
 
 module.exports = util_render = {};
 
-util_render.renderIndex (res) {
-  client.lindex('video:album:index', 1, function (indexFirst) {
-    client.hget(indexFirst, html, function (html) {
+util_render.renderIndex = function (res) {
+  client.exists('video:index', redis.print);
+  client.lindex('video:index', 0, function (err, indexFirst) {
+    console.log(indexFirst);
+    client.hgetall(indexFirst, function (err, html) {
       console.log(html);
     })
-  })
+  });
 
 }

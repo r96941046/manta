@@ -7,6 +7,7 @@ var restler = require('restler');
 var redis = require('redis')
     , client = redis.createClient();
 var URL= require(__dirname + '/utils/URL');
+var util_render = require(__dirname + '/utils/util_render');
 var timer = 10000;
 var port = 3000;
 
@@ -30,6 +31,8 @@ app.configure(function() {
 // Routes
 
 app.get('/', function(req, res) {
+
+  util_render.renderIndex(res);
   res.render('index.html');
 });
 app.get('/about.html', function(req, res) {

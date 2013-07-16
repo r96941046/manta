@@ -12,7 +12,7 @@ util_redis.registerAllItems = function (itemsToRegister, callback) {
           , allKeys = itemsToRegister.albums.allKeys
           , indexKeys = itemsToRegister.albums.indexKeys
           , libraryKeys = itemsToRegister.albums.libraryKeys;
-
+      
       client.multi()
             // Delete temp keys
             .del(['video:all:temp'
@@ -45,12 +45,16 @@ util_redis.registerAllItems = function (itemsToRegister, callback) {
             // Replace sets and album lists
             .del('video:all')
             .rename('video:all:temp', 'video:all', redis.print)
-            .lpush('video:index:temp', indexKeys)
-            .del('video:index')
-            .rename('video:index:temp', 'video:index', redis.print)
-            .lpush('video:library:temp', libraryKeys)
-            .del('video:library')
-            .rename('video:library:temp', 'video:library', redis.print)
+            .del('video:index', function (err, reply) {
+              indexKeys.forEach ( function (membersToPush) {
+                client.rpush('video:index', membersToPush);
+              });
+            })
+            .del('video:library', function (err, reply) {
+              libraryKeys.forEach ( function (membersToPush) {
+                client.rpush('video:library', membersToPush);
+              });
+            })
             .exec(function (err, logs) {
               if (err instanceof Error) {
                 callback(err);
