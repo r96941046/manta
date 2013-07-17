@@ -3,6 +3,7 @@
 // Module dependencies
 var redis = require('redis')
     , client = redis.createClient();
+var async = require('async');
 
 module.exports = util_redis = {};
 
@@ -62,4 +63,32 @@ util_redis.registerAllItems = function (itemsToRegister, callback) {
                 callback(null, logs);
               }
             });
+}
+
+util_redis.getIndexVideo = function (callback) {
+  var indexVideo = [];
+  client.lrange('video:index', 0, -1, function (err, indexList) {
+    async.map(indexList
+      , function (index, callback) {
+        client.hgetall(index, function (err, videoHash) {
+          if (err instanceof Error) {
+            callback(err);
+          } else {
+            callback(null, {
+               thumbnail_medium : videoHash.thumbnail_medium
+              , title : videoHash.title
+              , upload_date : videoHash.upload_date
+              , description : videoHash.description
+              , html : videoHash.html
+            });
+          }
+        });
+      }, function (err, results) {
+        if (err instanceof Error) {
+          callback(err);
+        } else {
+          callback(null, { indexVideo : results });
+        }
+      });  
+  });
 }

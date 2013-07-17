@@ -6,6 +6,7 @@ var app = express();
 var restler = require('restler');
 var redis = require('redis')
     , client = redis.createClient();
+var async = require('async');
 var URL= require(__dirname + '/utils/URL');
 var util_render = require(__dirname + '/utils/util_render');
 var timer = 10000;
@@ -31,9 +32,13 @@ app.configure(function() {
 // Routes
 
 app.get('/', function(req, res) {
-
-  util_render.renderIndex(res);
-  res.render('index.html');
+  async.waterfall([
+    function (callback) {
+      util_redis.getIndexVideo(callback);
+    }
+    ], function (err, renderItems) {
+      res.render('index.html', renderItems);
+    });
 });
 app.get('/about.html', function(req, res) {
   res.render('about.html');

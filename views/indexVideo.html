@@ -4,3 +4,30 @@
   <p class="videoDate">1 week ago</p>
   <p>The Castle, an underwater fortress on plateau surrounded by steep cliffs, is fortified by high walls formed by coral reefs. Behind the wall, a shield against strong currents, inhabit many small fish, which, along with sufficient food, attract storm-like nomadic hunters to feed; however, there are still even stronger threats waiting behind. And so the feast begins…</p>
 </div>
+
+<div id="videoR">
+                    
+					<script type="text/javascript">
+                    $(document).ready(function(){
+                      $('.carousel').bxSlider({
+                        mode: 'vertical',
+                        slideWidth: 300,
+                        minSlides: 3,
+                        slideMargin: 10
+                      });
+                    });
+          </script>
+                    
+          <div class="carousel">
+            <% for (i = 0; i < indexVideo.length; i++ ) { %>
+              <div class="slide"><a href="#"><img src="<%= indexVideo[i].thumbnail_medium %>"></a><p><%= indexVideo[i].title %></p>
+                <input type="hidden" name="video_upload_date<%= i %>" value="<%= indexVideo[i].upload_date %>">
+                <input type="hidden" name="video_description<%= i %>" value="<%= indexVideo[i].description %>">
+                <input type="hidden" name="video_html<%= i %>" value="<%= indexVideo[i].html %>">
+              </div>
+            <% } %>
+              
+          </div>
+                    
+</div>
+

@@ -8,7 +8,9 @@
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
-<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script src="~/public/plugins/underscore-min.js" type="text/javascript"></script>
+<script src="~/public/plugins/backbone-min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
 
@@ -50,33 +52,7 @@
           <br class="clearfix" />
           <div id="boxVideo">
             <% include indexVideo.html %>
-            <div id="videoR">
-                    
-					<script type="text/javascript">
-                    $(document).ready(function(){
-                      $('.carousel').bxSlider({
-                        mode: 'vertical',
-                        slideWidth: 300,
-                        minSlides: 3,
-                        slideMargin: 10
-                      });
-                    });
-                    </script>
-                    
-                  <div class="carousel">
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>1. Ocean Snapshot - Manta Rays</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>2. Ocean Snapshot - Nudibranch Bornella anguilla</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>3. Ocean Snapshot - Sexy Anemone Shrimp</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>4. Ocean Snapshot - Manta Rays</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>5. Ocean Snapshot - Nudibranch Bornella anguilla</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>6. Ocean Snapshot - Sexy Anemone Shrimp</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>7. Ocean Snapshot - Manta Rays</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>8. Ocean Snapshot - Nudibranch Bornella anguilla</p></div>
-                        <div class="slide"><a href="#"><img src="images/xx_video_02.jpg"></a><p>9. Ocean Snapshot - Sexy Anemone Shrimp</p></div>
-                    </div>
-                    
-              </div>
-              <br class="clearfix" />
+          <br class="clearfix" />
           </div>
       </div><!-- end boxShot -->
       

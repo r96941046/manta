@@ -23,7 +23,7 @@ helpers.appendVideoEmbed = function (arr) {
         for (i = 0; i < arr.length; i++) {
                arr[i].html = '<iframe src=\"http:\/\/player.vimeo.com\/video\/'
                + arr[i].id
-               + '\" width=\"1920\" height=\"1080\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>';
+               + '\" width=\"750\" height=\"422\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>';
         }
       return arr;
      }
