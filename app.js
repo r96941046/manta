@@ -70,4 +70,4 @@ setInterval( register , timer );
 
 app.listen(port);
 console.log('running~', app.get('address'));
-
+console.log(process.version + 'version node running');
