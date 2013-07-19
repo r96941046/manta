@@ -60,13 +60,27 @@ client.flushdb();
 var register = require(__dirname + '/modules/register.js');
 setInterval( register , timer );
 
-/*setInterval(function() {
-  restler.get(URL.INDEX_VIMEO)
-    .on('complete', function(data) {
-      console.log(data);
-    });
+var writePhoto = require(__dirname + '/modules/writePhoto.js');
+var fs = require('fs');
+var gm = require('gm')
+    , imageMagick = gm.subClass({ imageMagick : true });
 
-}, timer);*/
+
+app.get('/image', function (req, res) {
+  res.render('image.html');
+});
+app.get('/admin/upload', function (req, res) {
+  fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
+    if (err) { 
+      console.log(err);
+    } else {
+
+    res.writeHead(200, {'Content-Type' : 'image/jpeg'});
+    res.end(photo, 'binary');
+    }
+  });
+  console.log('req get!');
+  });
 
 app.listen(port);
 console.log('running~', app.get('address'));
