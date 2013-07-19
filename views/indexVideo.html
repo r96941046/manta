@@ -1,9 +1,9 @@
 <div id="boxVideo">
 <div id="videoL">
-  <iframe src="http://player.vimeo.com/video/51661287" width="750" height="422" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-  <h1>CASTLE</h1>
-  <p class="videoDate">1 week ago</p>
-  <p>The Castle, an underwater fortress on plateau surrounded by steep cliffs, is fortified by high walls formed by coral reefs. Behind the wall, a shield against strong currents, inhabit many small fish, which, along with sufficient food, attract storm-like nomadic hunters to feed; however, there are still even stronger threats waiting behind. And so the feast begins…</p>
+  <iframe src="<%= indexVideo[0].html %>" width="750" height="422" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <h1><%= indexVideo[0].title %></h1>
+  <p class="videoDate"><%= indexVideo[0].upload_date %></p>
+  <p class="videoDescription"><%= indexVideo[0].description %></p>
 </div>
 
 <div id="videoR">
@@ -11,6 +11,7 @@
 					<script type="text/javascript">
             
             $(document).ready(function(){
+               
                 <!-- bxSlider module -->
                 $('.carousel').bxSlider({
                    mode: 'vertical',
@@ -20,11 +21,14 @@
                         });
 
                 <!-- vimeo embed -->
-                var i = 1;
-                $('#video' + i).bind('click', function (event) {
-                    console.log('clicked');
-                    $('#videoL').find('iframe').attr('src', 'http://player.vimeo.com/video/53410844');
-                  })
+                for ( i = 0; i < $('#video_number').attr('value'); i++) {
+                   $('#video' + i).bind('click', function (event) {
+                       $('#videoL').find('iframe').attr('src', $(this).find('input[id^="video_html"]').attr('value'));
+                       $('#videoL').find('h1').html($(this).find('p').html());
+                       $('#videoL').find('p.videoDate').html($(this).find('input[id^="video_upload_date"]').attr('value'));
+                       $('#videoL').find('p.videoDescription').html($(this).find('input[id^="video_description"]').attr('value'));
+                     });
+                   }
                 });
 
           </script>
@@ -38,11 +42,9 @@
                 <input type="hidden" id="video_html<%= i %>" value="<%= indexVideo[i].html %>">
               </div>
             <% } %>
-              
+            <input type="hidden" id="video_number" value="<%= indexVideo.length %>">
           </div>
                     
 </div>
 <br class="clearfix" />
 </div>
-
-

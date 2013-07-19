@@ -21,9 +21,7 @@ helpers.appendVideoEmbed = function (arr) {
      return new Error('Video dara from vimeo is not an array');
      } else {
         for (i = 0; i < arr.length; i++) {
-               arr[i].html = '<iframe src=\"http:\/\/player.vimeo.com\/video\/'
-               + arr[i].id
-               + '\" width=\"750\" height=\"422\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>';
+               arr[i].html = 'http:\/\/player.vimeo.com\/video\/' + arr[i].id;
         }
       return arr;
      }
