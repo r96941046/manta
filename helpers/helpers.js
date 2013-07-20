@@ -39,3 +39,7 @@ helpers.getListKeys = function (arr) {
     return listKeys;
   }
 }
+
+helpers.photoIdEncode = function (str) {
+  return str.slice(0, 19).match(/[0-9]/g).join("");
+}

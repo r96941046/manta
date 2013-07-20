@@ -92,3 +92,22 @@ util_redis.getIndexVideo = function (callback) {
       });  
   });
 }
+
+util_redis.writePhoto = function (itemsToWrite, callback) {
+  
+  var photohash = 'photo:' + itemsToWrite.Id
+      , photolist = itemsToWrite.List;
+
+  client.multi()
+    .hmset( photohash, itemsToWrite)
+    .sadd('photo:all', photohash)
+    .rpush('photo:' + photolist, photohash)
+    .exec( function (err, logs) {
+      if (err) {
+        callback(err);
+      } else {
+        console.log('Add ' + photohash + ' to list successfully!');
+        callback(null, logs);
+      }   
+    })
+}

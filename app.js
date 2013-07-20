@@ -60,16 +60,161 @@ client.flushdb();
 var register = require(__dirname + '/modules/register.js');
 setInterval( register , timer );
 
-var writePhoto = require(__dirname + '/modules/writePhoto.js');
+// Photo write system
+
+var registerPhoto = require(__dirname + '/modules/registerPhoto.js');
 var fs = require('fs');
+var mockPhoto = require(__dirname + '/mock/mockPhoto.js');
 var gm = require('gm')
     , imageMagick = gm.subClass({ imageMagick : true });
 
+app.get('/DBinfo', function (req, res) {
+  client.smembers('photo:all', redis.print);
+  client.lrange('photo:news', 0, -1, redis.print);
+  client.lrange('photo:snapshot', 0, -1, redis.print);
+  client.lrange('photo:contest', 0, -1, redis.print);
+
+});
+
+app.get('/photo', function (req, res) {
+  // mock photo information
+   async.series([
+    function (callback) {
+       fs.readFile('mock/photo/IMG_0000.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            callback(null, photo);
+          }
+          });
+    }, 
+    function (callback) {
+        fs.readFile('mock/photo/IMG_0000.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            imageMagick(photo).identify( function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, data);
+            }
+          });
+          }
+        }); 
+    }
+    ], function (err, photo) {
+        registerPhoto(photo, mockPhoto.photo01); 
+    });
+
+  
+  async.series([
+    function (callback) {
+       fs.readFile('mock/photo/IMG_0959.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            callback(null, photo);
+          }
+          });
+    }, 
+    function (callback) {
+        fs.readFile('mock/photo/IMG_0959.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            imageMagick(photo).identify( function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, data);
+            }
+          });
+          }
+        }); 
+    }
+    ], function (err, photo) {
+        registerPhoto(photo, mockPhoto.photo02); 
+    });
+
+  
+  async.series([
+    function (callback) {
+       fs.readFile('mock/photo/IMG_7518.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            callback(null, photo);
+          }
+          });
+    }, 
+    function (callback) {
+        fs.readFile('mock/photo/IMG_7518.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            imageMagick(photo).identify( function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, data);
+            }
+          });
+          }
+        }); 
+    }
+    ], function (err, photo) {
+        registerPhoto(photo, mockPhoto.photo03); 
+    });
+ 
+  async.series([
+    function (callback) {
+       fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            callback(null, photo);
+          }
+          });
+    }, 
+    function (callback) {
+        fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
+          if (err) { 
+            callback(err);
+          } else {
+            imageMagick(photo).identify( function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, data);
+            }
+          });
+          }
+        }); 
+    }
+    ], function (err, photo) {
+        registerPhoto(photo, mockPhoto.photo04); 
+    });
+});
 
 app.get('/image', function (req, res) {
   res.render('image.html');
 });
 app.get('/admin/upload', function (req, res) {
+  imageMagick('mock/photo/083 copy.jpg')
+  .flip()
+  .resize(340, 255)
+  .identify( function (err, data) {
+    console.log(data);
+  });
+/*  .stream('jpeg', function (err, stdout) {
+     if (err) return next(err);
+     res.setHeader('Content-Type', 'image/jpeg');
+      stdout.pipe(res);
+
+  });
+  */
+/*  
   fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
     if (err) { 
       console.log(err);
@@ -78,7 +223,7 @@ app.get('/admin/upload', function (req, res) {
     res.writeHead(200, {'Content-Type' : 'image/jpeg'});
     res.end(photo, 'binary');
     }
-  });
+  });*/
   console.log('req get!');
   });
 
