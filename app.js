@@ -27,17 +27,23 @@ app.configure(function() {
   app.use('/images', express.static(__dirname + '/public/images'));
   app.use('/js', express.static(__dirname + '/public/js'));
   app.use('/plugins', express.static(__dirname + '/public/plugins'));
+  app.use('/sphoto', express.static(__dirname + '/archive/sphoto'));
+  app.use('/lphoto', express.static(__dirname + '/archive/lphoto'));
 });
 
 // Routes
 
 app.get('/', function(req, res) {
-  async.waterfall([
+  async.parallel([
     function (callback) {
       util_redis.getIndexVideo(callback);
     }
+    , function (callback) {
+      util_redis.getIndexNews(callback);
+    }
     ], function (err, renderItems) {
-      res.render('index.html', renderItems);
+      console.log(renderItems[1]);
+      res.render('index.html', renderItems[0]);
     });
 });
 app.get('/about.html', function(req, res) {
@@ -71,7 +77,7 @@ var gm = require('gm')
 
 
 // Delete writed photos in development stage
-
+/*
 fs.unlink(__dirname + '/archive/lphoto/l20130720155035.jpg', function (err) { if (err) throw err;});
 fs.unlink(__dirname + '/archive/lphoto/l20130720165035.jpg', function (err) { if (err) throw err;});
 fs.unlink(__dirname + '/archive/lphoto/l20130720175035.jpg', function (err) { if (err) throw err;});
@@ -80,7 +86,7 @@ fs.unlink(__dirname + '/archive/sphoto/s20130720155035.jpg', function (err) { if
 fs.unlink(__dirname + '/archive/sphoto/s20130720165035.jpg', function (err) { if (err) throw err;});
 fs.unlink(__dirname + '/archive/sphoto/s20130720175035.jpg', function (err) { if (err) throw err;});
 fs.unlink(__dirname + '/archive/sphoto/s20130720185035.jpg', function (err) { if (err) throw err;});
-
+*/
 app.get('/DBinfo', function (req, res) {
   client.smembers('photo:all', redis.print);
   client.lrange('photo:news', 0, -1, redis.print);

@@ -66,7 +66,6 @@ util_redis.registerAllItems = function (itemsToRegister, callback) {
 }
 
 util_redis.getIndexVideo = function (callback) {
-  var indexVideo = [];
   client.lrange('video:index', 0, -1, function (err, indexList) {
     async.map(indexList
       , function (index, callback) {
@@ -110,4 +109,29 @@ util_redis.writePhoto = function (itemsToWrite, callback) {
         callback(null, logs);
       }   
     })
+}
+
+util_redis.getIndexNews = function (callback) {
+  client.lrange('photo:news', 0, -1, function (err, newsList) {
+    async.map(newsList
+      , function (news, callback) {
+        client.hgetall(news, function (err, photoHash) {
+          if (err instanceof Error) {
+            callback(err);
+          } else {
+            callback(null, {
+               DateTime : photoHash.DateTime
+              , Description : photoHash.Description
+              , Spath : photoHash.Spath
+            });
+          }
+        });
+      }, function (err, results) {
+        if (err instanceof Error) {
+          callback(err);
+        } else {
+          callback(null, { indexVideo : results });
+        }
+      });  
+  });
 }
