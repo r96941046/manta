@@ -55,6 +55,7 @@ client.on('error', function(err) {
 
 client.flushdb();
 
+
 // Periodic refresh videos from vimeo
 
 var register = require(__dirname + '/modules/register.js');
@@ -67,6 +68,18 @@ var fs = require('fs');
 var mockPhoto = require(__dirname + '/mock/mockPhoto.js');
 var gm = require('gm')
     , imageMagick = gm.subClass({ imageMagick : true });
+
+
+// Delete writed photos in development stage
+
+fs.unlink(__dirname + '/archive/lphoto/l20130720155035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/lphoto/l20130720165035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/lphoto/l20130720175035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/lphoto/l20130720185035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/sphoto/s20130720155035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/sphoto/s20130720165035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/sphoto/s20130720175035.jpg', function (err) { if (err) throw err;});
+fs.unlink(__dirname + '/archive/sphoto/s20130720185035.jpg', function (err) { if (err) throw err;});
 
 app.get('/DBinfo', function (req, res) {
   client.smembers('photo:all', redis.print);
