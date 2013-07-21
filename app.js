@@ -42,8 +42,10 @@ app.get('/', function(req, res) {
       util_redis.getIndexNews(callback);
     }
     ], function (err, renderItems) {
-      console.log(renderItems[1]);
-      res.render('index.html', renderItems[0]);
+      res.render('index.html', {
+        indexVideo : renderItems[0].indexVideo
+        , indexNews : renderItems[1].indexNews
+      });
     });
 });
 app.get('/about.html', function(req, res) {

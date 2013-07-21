@@ -43,3 +43,11 @@ helpers.getListKeys = function (arr) {
 helpers.photoIdEncode = function (str) {
   return str.slice(0, 19).match(/[0-9]/g).join("");
 }
+
+helpers.trimPath = function (str) {
+  return str.slice(10);
+}
+
+helpers.trimTime = function (str) {
+  return str.slice(0, 10).replace(/-/g, '.');
+} 

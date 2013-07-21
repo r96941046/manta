@@ -4,6 +4,7 @@
 var redis = require('redis')
     , client = redis.createClient();
 var async = require('async');
+var helpers = require('../helpers/helpers.js');
 
 module.exports = util_redis = {};
 
@@ -112,7 +113,7 @@ util_redis.writePhoto = function (itemsToWrite, callback) {
 }
 
 util_redis.getIndexNews = function (callback) {
-  client.lrange('photo:news', 0, -1, function (err, newsList) {
+  client.lrange('photo:news', -3, -1, function (err, newsList) {
     async.map(newsList
       , function (news, callback) {
         client.hgetall(news, function (err, photoHash) {
@@ -120,9 +121,9 @@ util_redis.getIndexNews = function (callback) {
             callback(err);
           } else {
             callback(null, {
-               DateTime : photoHash.DateTime
+               DateTime : helpers.trimTime(photoHash.DateTime)
               , Description : photoHash.Description
-              , Spath : photoHash.Spath
+              , Spath : helpers.trimPath(photoHash.Spath)
             });
           }
         });
@@ -130,7 +131,7 @@ util_redis.getIndexNews = function (callback) {
         if (err instanceof Error) {
           callback(err);
         } else {
-          callback(null, { indexVideo : results });
+          callback(null, { indexNews : results.reverse() });
         }
       });  
   });
