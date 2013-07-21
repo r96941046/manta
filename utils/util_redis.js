@@ -136,3 +136,21 @@ util_redis.getIndexNews = function (callback) {
       });  
   });
 }
+
+util_redis.getIndexSnapshot = function (callback) {
+  client.lindex('photo:snapshot', -1, function (err, snapshotKey) {
+        client.hgetall(snapshotKey, function (err, photoHash) {
+          if (err instanceof Error) {
+            callback(err);
+          } else {
+            callback(null, { indexSnapshot : [
+                {
+                   Title : photoHash.Title
+                  , Description : photoHash.Description
+                  , Spath : helpers.trimPath(photoHash.Spath)
+                }
+              ]});
+          }
+        });
+  });
+}

@@ -8,7 +8,6 @@ var redis = require('redis')
     , client = redis.createClient();
 var async = require('async');
 var URL= require(__dirname + '/utils/URL');
-var util_render = require(__dirname + '/utils/util_render');
 var timer = 10000;
 var port = 3000;
 
@@ -41,10 +40,14 @@ app.get('/', function(req, res) {
     , function (callback) {
       util_redis.getIndexNews(callback);
     }
+    , function (callback) {
+      util_redis.getIndexSnapshot(callback);
+    }
     ], function (err, renderItems) {
       res.render('index.html', {
         indexVideo : renderItems[0].indexVideo
         , indexNews : renderItems[1].indexNews
+        , indexSnapshot : renderItems[2].indexSnapshot
       });
     });
 });
@@ -97,125 +100,10 @@ app.get('/DBinfo', function (req, res) {
 
 });
 
+var mockImport = require(__dirname + '/mock/mockImport.js');
 app.get('/photo', function (req, res) {
   // mock photo information
-   async.series([
-    function (callback) {
-       fs.readFile('mock/photo/IMG_0000.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            callback(null, photo);
-          }
-          });
-    }, 
-    function (callback) {
-        fs.readFile('mock/photo/IMG_0000.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            imageMagick(photo).identify( function (err, data) {
-            if (err) {
-              callback(err);
-            } else {
-              callback(null, data);
-            }
-          });
-          }
-        }); 
-    }
-    ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo01); 
-    });
-
-  
-  async.series([
-    function (callback) {
-       fs.readFile('mock/photo/IMG_0959.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            callback(null, photo);
-          }
-          });
-    }, 
-    function (callback) {
-        fs.readFile('mock/photo/IMG_0959.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            imageMagick(photo).identify( function (err, data) {
-            if (err) {
-              callback(err);
-            } else {
-              callback(null, data);
-            }
-          });
-          }
-        }); 
-    }
-    ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo02); 
-    });
-
-  
-  async.series([
-    function (callback) {
-       fs.readFile('mock/photo/IMG_7518.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            callback(null, photo);
-          }
-          });
-    }, 
-    function (callback) {
-        fs.readFile('mock/photo/IMG_7518.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            imageMagick(photo).identify( function (err, data) {
-            if (err) {
-              callback(err);
-            } else {
-              callback(null, data);
-            }
-          });
-          }
-        }); 
-    }
-    ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo03); 
-    });
- 
-  async.series([
-    function (callback) {
-       fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            callback(null, photo);
-          }
-          });
-    }, 
-    function (callback) {
-        fs.readFile('mock/photo/083 copy.jpg', function (err, photo) {
-          if (err) { 
-            callback(err);
-          } else {
-            imageMagick(photo).identify( function (err, data) {
-            if (err) {
-              callback(err);
-            } else {
-              callback(null, data);
-            }
-          });
-          }
-        }); 
-    }
-    ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo04); 
-    });
+  mockImport();
 });
 
 app.get('/image', function (req, res) {
