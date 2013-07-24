@@ -23,15 +23,19 @@
                 <!-- vimeo embed -->
                 for ( i = 0; i < $('#video_number').attr('value'); i++) {
                    $('#video' + i).bind('click', function (event) {
-                       $('#videoL').find('iframe')
-                             .fadeTo('normal', 0).attr('src', $(this).find('input[id^="video_html"]').attr('value'))
-                             .end().find('h1').html($(this).find('p').html())
-                             .end().find('p.videoDate').html($(this).find('input[id^="video_upload_date"]').attr('value'))
-                             .end().find('p.videoDescription').html($(this).find('input[id^="video_description"]').attr('value'))
-                             .end().find('iframe').fadeTo('slow', 1);
-                     });
-                   }
-                });
+                     var el = this;
+                     $('#videoL').find('iframe').fadeTo('normal', 0, function () {
+                       $(this).attr('src', $(el).find('input[id^="video_html"]').attr('value'))
+                              .load( function () {
+                                $(this).fadeTo('normal', 1);
+                                });
+                       $('#videoL').find('h1').html($(el).find('p').html());
+                       $('#videoL').find('p.videoDate').html($(el).find('input[id^="video_upload_date"]').attr('value'));
+                       $('#videoL').find('p.videoDescription').html($(el).find('input[id^="video_description"]').attr('value'));
+                       });
+                   });
+                }
+            });
 
           </script>
                     
