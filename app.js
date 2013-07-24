@@ -22,6 +22,7 @@ app.configure(function() {
   // without looking for the default layout.ejs
   app.set('view options', { layout: false});
   // routing for css and image files
+  app.use(express.bodyParser());
   app.use('/css', express.static(__dirname + '/public/css'));
   app.use('/images', express.static(__dirname + '/public/images'));
   app.use('/js', express.static(__dirname + '/public/js'));
@@ -55,6 +56,13 @@ app.get('/about.html', function(req, res) {
   res.render('about.html');
 });
 
+app.get('/upload', function (req, res) {
+  res.render('upload.html');
+});
+
+app.post('/api/upload', function (req, res) {
+  console.log(req);
+});
 
 // Redis server
   
