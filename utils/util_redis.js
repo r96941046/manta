@@ -107,9 +107,6 @@ util_redis.writePhoto = function (itemsToWrite, callback) {
         callback(err);
       } else {
         console.log('Add ' + photohash + ' to list successfully!');
-        client.hgetall( photohash, function (err, data) {
-          console.log(data);
-        });
         callback(null, logs);
       }   
     })
