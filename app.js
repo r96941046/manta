@@ -56,12 +56,13 @@ app.get('/about.html', function(req, res) {
   res.render('about.html');
 });
 
-app.get('/upload', function (req, res) {
+app.get('/api/upload', function (req, res) {
   res.render('upload.html');
 });
 
 app.post('/api/upload', function (req, res) {
   console.log(req);
+  res.end('Upload success!');
 });
 
 // Redis server
