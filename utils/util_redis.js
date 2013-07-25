@@ -107,6 +107,9 @@ util_redis.writePhoto = function (itemsToWrite, callback) {
         callback(err);
       } else {
         console.log('Add ' + photohash + ' to list successfully!');
+        client.hgetall( photohash, function (err, data) {
+          console.log(data);
+        });
         callback(null, logs);
       }   
     })
@@ -121,7 +124,7 @@ util_redis.getIndexNews = function (callback) {
             callback(err);
           } else {
             callback(null, {
-               DateTime : helpers.trimTime(photoHash.DateTime)
+               DateTime : photoHash.DateTime
               , Description : photoHash.Description
               , Spath : helpers.trimPath(photoHash.Spath)
             });

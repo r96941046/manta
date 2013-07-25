@@ -22,6 +22,7 @@
     <li> Enter Title : Hairy Frogfish（條紋躄魚）
     <li> Enter Description : 鼻子尖尖，鬍子翹翹，還拿著一支釣竿的躄魚，又被稱為娃娃魚，是海中非常傑出的偽裝大師。常趴在石縫間靜止不動，就像顆石塊，並伸出像是釣餌的「餌球」，再以迅雷不及掩耳的速度吞食粗心的獵物。海底映像這次的藍碧海峽之行，也有幸紀錄到這閃電般的一瞬間，將在整理後與大家分享唷～^_^
     <li> Enter Auther : Dr. John Jin-Jong Lin
+    <li> Enter Camera : Canon Powershot G15
     <li> Select List : snapshot
   </ol>
 
@@ -33,12 +34,13 @@
         method='POST' 
         enctype='multipart/form-data' 
         action='api/upload'>
-    File to upload: <input type=file name=upfile><br>
+    File to upload: <input type=file name=photoFile><br>
     Enter DateTime (reveal in browser) : <input type=text name=DateTime><br>
     Enter Location : <input type=text name=Location><br>
     Enter Title : <input type=text name=Title><br>
     Enter Description : <TEXTAREA name=Description ROWS=5 COLS=50></TEXTAREA><br>
     Enter Author : <input type=text name=Author><br>
+    Enter Camera : <input type=text name=Camera><br>
     Select List : <select multiple='multiple' name='List'>
                   <option>news</option>
                   <option>snapshot</option>

@@ -2,7 +2,7 @@
 //
 // Dependencies
 var async = require('async');
-var registerPhoto = require('../modules/registerPhoto.js');
+var registerPhotoTemp = require('../modules/registerPhotoTemp.js');
 var fs = require('fs');
 var mockPhoto = require('../mock/mockPhoto.js');
 var gm = require('gm')
@@ -37,7 +37,7 @@ module.exports = mockImport = function () {
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo01); 
+        registerPhotoTemp(photo, mockPhoto.photo01); 
     });
 
   
@@ -67,7 +67,7 @@ module.exports = mockImport = function () {
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo02); 
+        registerPhotoTemp(photo, mockPhoto.photo02); 
     });
 
   
@@ -97,7 +97,7 @@ module.exports = mockImport = function () {
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo03); 
+        registerPhotoTemp(photo, mockPhoto.photo03); 
     });
  
   async.series([
@@ -126,7 +126,7 @@ module.exports = mockImport = function () {
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo04); 
+        registerPhotoTemp(photo, mockPhoto.photo04); 
     });
 
 async.series([
@@ -155,7 +155,7 @@ async.series([
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo05); 
+        registerPhotoTemp(photo, mockPhoto.photo05); 
     });
 async.series([
     function (callback) {
@@ -183,7 +183,7 @@ async.series([
         }); 
     }
     ], function (err, photo) {
-        registerPhoto(photo, mockPhoto.photo06); 
+        registerPhotoTemp(photo, mockPhoto.photo06); 
     });
 
 };

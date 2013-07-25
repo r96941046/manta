@@ -61,7 +61,7 @@ app.get('/api/upload', function (req, res) {
 });
 
 app.post('/api/upload', function (req, res) {
-  console.log(req);
+  registerPhoto(req.files.photoFile.path, req.body);
   res.end('Upload success!');
 });
 
